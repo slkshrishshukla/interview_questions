@@ -1,0 +1,393 @@
+Given two non-negative integers, num1 and num2 represented as string, return the sum of num1 and num2 as a string using string operations.
+  Example 1:
+    Input: num1 = "11", num2 = "123"
+    Output: "134"
+  Example 2:
+    Input: num1 = "456", num2 = "77"
+    Output: "533"
+  Example 3:
+    Input: num1 = "0", num2 = "0"
+    Output: "0"
+Ans : -
+def addStrings(num1: str, num2: str) -> str:
+    i, j = len(num1) - 1, len(num2) - 1
+    carry = 0
+    result = []
+    while i >= 0 or j >= 0 or carry:
+        digit1 = ord(num1[i]) - ord('0') if i >= 0 else 0
+        digit2 = ord(num2[j]) - ord('0') if j >= 0 else 0
+
+        total = digit1 + digit2 + carry
+        result.append(chr(total % 10 + ord('0')))
+        carry = total // 10
+        i -= 1
+        j -= 1
+
+    return ''.join(reversed(result))
+ You are given an absolute path for a Unix-style file system, which always begins with a slash '/'. Your task is to transform this absolute path into its simplified canonical path.
+The rules of a Unix-style file system are as follows:
+•	A single period '.' represents the current directory.
+•	A double period '..' represents the previous/parent directory.
+•	Multiple consecutive slashes such as '//' and '///' are treated as a single slash '/'.
+•	Any sequence of periods that does not match the rules above should be treated as a valid directory or file name. For example, '...' and '....' are valid directory or file names.
+The simplified canonical path should follow these rules:
+•	The path must start with a single slash '/'.
+•	Directories within the path must be separated by exactly one slash '/'.
+•	The path must not end with a slash '/', unless it is the root directory.
+•	The path must not have any single or double periods ('.' and '..') used to denote current or parent directories.
+Return the simplified canonical path.
+ 
+Example 1:
+Input: path = "/home/"
+Output: "/home"
+Explanation:
+The trailing slash should be removed.
+Example 2:
+Input: path = "/home//foo/"
+Output: "/home/foo"
+Explanation:
+Multiple consecutive slashes are replaced by a single one.
+Example 3:
+Input: path = "/home/user/Documents/../Pictures"
+Output: "/home/user/Pictures"
+Explanation:
+A double period ".." refers to the directory up a level (the parent directory).
+Example 4:
+Input: path = "/../"
+Output: "/"
+Explanation:
+Going one level up from the root directory is not possible.
+Example 5:
+Input: path = "/.../a/../b/c/../d/./"
+Output: "/.../b/d"
+Explanation:
+"..." is a valid name for a directory in this problem.
+def simplifypath(path:str):
+    stock = []
+    for part in path.split('/'):
+        if part =='' or path == '.':
+            continue 
+        elif part =='..':
+            if stock:
+                stock.pop()
+        else:
+            stock.append(part)
+    return '/' +'/'.join(stock)
+
+path = '/home/user/Documents/../Pictures
+
+Design an LRU Cache with Expiry and Priority-based Eviction
+🧠 Objective:
+Design and implement a high-performance in-memory cache that behaves like an LRU (Least Recently Used) cache, but with two additional real-world constraints:
+•	Time-to-live (TTL): Keys can expire after a set number of seconds.
+•	Priority-based eviction: When evicting due to capacity, the key with the lowest priority is evicted first. If priorities are equal, use LRU order.
+________________________________________
+🚀 Functional Requirements:
+Your class should support the following methods:
+__init__(self, capacity: int)
+•	Initializes the cache with a fixed capacity.
+•	The cache must hold at most capacity keys at any time.
+________________________________________
+put(self, key: str, value: Any, ttl: Optional[int] = None, priority: int = 0) -> None
+•	Inserts or updates the value for the given key.
+•	ttl: Optional time-to-live in seconds. If set, the key should auto-expire after ttl seconds from insertion.
+•	priority: Integer representing eviction priority. Higher values = more important = harder to evict.
+•	If the cache is full: 
+1.	Remove expired keys first.
+2.	If still full, evict the key with lowest priority.
+3.	If multiple keys have the same priority, evict the least recently used among them.
+________________________________________
+get(self, key: str) -> Any
+•	Returns the value associated with the key only if: 
+o	It exists in the cache
+o	It has not expired
+•	If not found or expired, return -1.
+________________________________________
+✅ Behavior Example
+cache = AdvancedLRUCache(2)
+
+cache.put("a", 1, ttl=5, priority=2)   # stores "a"cache.put("b", 2, ttl=5, priority=3)   # stores "b"print(cache.get("a"))  # Output: 1
+cache.put("c", 3, ttl=5, priority=1)   # Cache is full. # "c" has lowest priority, but "a" has been used less recently than "b" # "a" is evicted (even though it has higher priority than "c") due to lower recencyprint(cache.get("a"))  # Output: -1 print(cache.get("b"))  # Output: 2 print(cache.get("c"))  # Output: 3 
+________________________________________
+💡 Notes:
+•	Assume wall clock time can be obtained using time.time().
+•	TTL countdown should start from time of insertion.
+•	You don’t need background cleanup; just check expiry during get() or put().
+•	You can use OrderedDict, heapq, or custom doubly linked list for LRU management.
+________________________________________
+🧪 Bonus Challenge:
+•	Add size() method: return the number of non-expired keys in the cache.
+•	Add optional max_priority_only=True flag to get() that returns value only if it's the highest-priority item.
+
+
+5. How do microservices communicate with each other?
+Expect candidates to mention synchronous APIs like REST or GraphQL and asynchronous messaging, for example via Apache Kafka or RabbitMQ.
+Microservices often communicate through stateless methods which require each call to contain all the information needed to complete the request. They can also communicate through event-driven approaches which help in decoupling and asynchronous interaction.
+6. Can you explain the role of a service mesh in microservices architecture?
+A service mesh provides a transparent and dynamic way to manage service-to-service communication and is responsible for routing traffic, handling failures, service discovery, and security.
+Candidates might mention tools such as Istio or Linkerd.
+
+difference between sort and sorted functions in python
+which library you have used for data manipulation example(pandas and numpy)
+What are the types of middleware in django?
+
+1.	Explain what is Django and Flask to someone who is new to software development
+2.	Difference between MVC and MVT
+3.	Difference between Flask and Django
+4.	What is API throttling
+5.	How will you debug an API if it is failing in production
+6.	What are rest API methods and explain them
+7.	What are sessions and how to maintain a session in Flask and Django
+8.	How to use a sql DB with Flask (libraries needed)
+9.	If an API is taking a long time to give a response, What is your approach on optimizing the API
+10.	How to authentication work in Flask
+11.	What are the positives and negatives of Python
+12.	What is microservice architecture? what is the advantage of it and how to implement it?
+13.	In a micro serviec architecture, How will you develop and deploy a service? You create all the services together and push it to production, or develop and deploy one by one? Why?
+14.	Have you done any perfomance optimizing in an API development? if yes explain
+15.	What is a decorator in Python? Give some examples and write to code to implement a decorator
+16.	What are the cases we choose Flask over Django?
+17.	How to choose a DB(relational or non-relational) for the project? What are your considerations in choosing a DB for a project
+18.	DRF- why we use it
+Django REST Framework (DRF) is a powerful open-source framework for building RESTful APIs. Due to its robustness, ease of use, and comprehensive feature set, it has become the de facto standard for building APIs with Django.
+
+DRF's key features include:
+
+Routing
+Request/response handling
+Authorization and authentication
+Serialization and data validation
+Filtering, ordering, and more!
+Additionally, the framework comes with a web browseable API, extensive documentation, and many third-party packages.
+
+19.	flask- how to add db in flask and use it
+pip install flask-sqlalchemy
+In your app.py file import SQLAlchemy as shown in the below code. We also need to add a configuration setting to our application so that we can use SQLite database in our application. We also need to create an SQLAlchemy database instance which is as simple as creating an object.
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+
+app = Flask(__name__)
+app.debug = True
+
+# adding configuration for using a sqlite database
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+
+# Creating an SQLAlchemy instance
+db = SQLAlchemy(app)
+
+if __name__ == '__main__':
+    app.run()
+
+20.	What are context managers in Python and how are they implemented?
+Context managers in Python are used to manage resources, ensuring that they are properly acquired and released. The most common use of context managers is the with statement
+class FileManager:
+    def __init__(self, filename, mode):
+        self.filename = filename
+        self.mode = mode
+    
+    def __enter__(self):
+        self.file = open(self.filename, self.mode)
+        return self.file
+    
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.file.close()
+
+with FileManager('test.txt', 'w') as f:
+    f.write('Hello, world!')
+In this example, the FileManager class is a context manager that ensures the file is properly closed after it is used within the with statement.
+What are decorators in Python? 
+Decorators in Python are a design pattern that allows you to add new functionality to an existing object without modifying its structure. They are commonly used to extend the behavior of functions or methods.
+Example:
+def my_decorator(func):
+    def wrapper():
+        print("Something is happening before the function is called.")
+        func()
+        print("Something is happening after the function is called.")
+    return wrapper
+@my_decorator
+def say_hello():
+    print("Hello!")
+
+say_hello()
+def my_decorator(func):
+    def wrapper():
+        print("Something is happening before the function is called.")
+        func()
+        print("Something is happening after the function is called.")
+    return wrapper
+
+
+# Output:
+# Something is happening before the function is called.
+# Hello!
+# Something is happening after the function is called.
+
+Check whether a number is palindrome
+2. Get the indexes of 2 numbers in a list which sums up to the target provided
+	li=[3,4,1,5,7]
+	target = 10
+	output is [0,4] (indeces of 3 and 7)
+3. Find the sum of digits of an input number until it reaches a single digit number
+	eg: input = 12345
+		sum of digits = 1+2+3+4+5 = 15
+		sum of digits = 1+5 = 6
+		output = 6
+	eg: 539852925899969898
+		sum of digits = 5+3+9+8+5+2+9+2+5+8+9+9+9+6+9+8+9+8 = 123
+		sum of digits = 1+2+3 = 6
+		output = 6
+4. Reverse a string without changing the positions of special characters.
+String: 123$%^abc
+Reversed String: cba$%^321
+
+Write program for below expected output
+input="He#ll*o$ wo&rld"
+o/p= olleH dlrow
+
+
+Input will be -> root/head node of tree
+ 
+Input 1 -  Binary Tree
+        1
+     /      \
+   10      39
+  /             \   
+5              16
+ 
+ 
+Expected  Output 1
+         1
+     /      \
+   39      10
+  /             \   
+16              5
+ 
+Your method -- 
+func createRelica(Node root){
+//your code here}
+
+4. Given a square matrix, calculate the absolute difference between the sums of its diagonals.
+ 
+For example, the square matrix  is shown below:
+ 
+1 2 3
+4 5 6
+9 8 9  
+The left-to-right diagonal = . The right to left diagonal = . Their absolute difference is .
+
+
+3Sum:
+Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+Notice that the solution set must not contain duplicate triplets.
+Example:
+Input: nums = [-1, 0, 1, 2, -1, -4]Output: [[-1, -1, 2], [-1, 0, 1]]
+
+
+Group Anagrams:
+Given an array of strings, group the anagrams together. An anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+Example:
+Input: ["eat", "tea", "tan", "ate", "nat", "bat"]Output: [["eat", "tea", "ate"], ["tan", "nat"], ["bat"]]
+ 
+Question
+You are given an absolute path for a Unix-style file system, which always begins with a slash '/'. Your task is to transform this absolute path into its simplified canonical path.
+The rules of a Unix-style file system are as follows:
+•	A single period '.' represents the current directory.
+•	A double period '..' represents the previous/parent directory.
+•	Multiple consecutive slashes such as '//' and '///' are treated as a single slash '/'.
+•	Any sequence of periods that does not match the rules above should be treated as a valid directory or file name. For example, '...' and '....' are valid directory or file names.
+The simplified canonical path should follow these rules:
+•	The path must start with a single slash '/'.
+•	Directories within the path must be separated by exactly one slash '/'.
+•	The path must not end with a slash '/', unless it is the root directory.
+•	The path must not have any single or double periods ('.' and '..') used to denote current or parent directories.
+Return the simplified canonical path.
+ 
+Example 1:
+Input: path = "/home/"
+Output: "/home"
+Explanation:
+The trailing slash should be removed.
+Example 2:
+Input: path = "/home//foo/"
+Output: "/home/foo"
+Explanation:
+Multiple consecutive slashes are replaced by a single one.
+Example 3:
+Input: path = "/home/user/Documents/../Pictures"
+Output: "/home/user/Pictures"
+Explanation:
+A double period ".." refers to the directory up a level (the parent directory).
+Example 4:
+Input: path = "/../"
+Output: "/"
+Explanation:
+Going one level up from the root directory is not possible.
+Example 5:
+Input: path = "/.../a/../b/c/../d/./"
+Output: "/.../b/d"
+Explanation:
+"..." is a valid name for a directory in this problem.
+
+
+Given a string s, find the length of the longest substring without duplicate characters.
+ 
+Example 1:
+Input: s = "abcabcbb"Output: 3Explanation: The answer is "abc", with the length of 3.
+Example 2:
+Input: s = "bbbbb"Output: 1Explanation: The answer is "b", with the length of 1.
+Example 3:
+Input: s = "pwwkew"Output: 3Explanation: The answer is "wke", with the length of 3.
+Notice that the answer must be a substring, "pwke" is a subsequence and not a sub
+Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
+Symbol       ValueI             1
+V             5
+X             10
+L             50
+C             100
+D             500
+M             1000
+For example, 2 is written as II in Roman numeral, just two ones added together. 12 is written as XII, which is simply X + II. The number 27 is written as XXVII, which is XX + V + II.
+Roman numerals are usually written largest to smallest from left to right. However, the numeral for four is not IIII. Instead, the number four is written as IV. Because the one is before the five we subtract it making four. The same principle applies to the number nine, which is written as IX. There are six instances where subtraction is used:
+•	I can be placed before V (5) and X (10) to make 4 and 9. 
+•	X can be placed before L (50) and C (100) to make 40 and 90. 
+•	C can be placed before D (500) and M (1000) to make 400 and 900.
+Given a roman numeral, convert it to an integer.
+ 
+Example 1:
+Input: s = "III"Output: 3Explanation: III = 3.
+Example 2:
+Input: s = "LVIII"Output: 58Explanation: L = 50, V= 5, III = 3.
+Example 3:
+Input: s = "MCMXCIV"Output: 1994Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.
+ 
+
+Write a SQL query to find the top 5 departments with the highest average salary for employees, but only include departments that have more than 10 employees. The result should display the department name and the average salary, ordered by average salary in descending order.
+ 
+Schema:
+•	employee_id (int)
+•	employee_name (varchar)
+•	department (varchar)
+•	salary (decimal)
+ 
+The goal will be to find the top 5 countries with the highest average age for customers, but only include countries that have more than 1 customer. The result should display the country and the average age, ordered by average age in descending order
+ 
+
+write a function to check if a given string is valid IPv4 address.
+
+Given an array of strings strs, group the anagrams together. You can return the answer in any order.
+ 
+Example 1:
+Input: strs = ["eat","tea","tan","ate","nat","bat"]
+Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+Explanation:
+•	There is no string in strs that can be rearranged to form "bat".
+•	The strings "nat" and "tan" are anagrams as they can be rearranged to form each other.
+•	The strings "ate", "eat", and "tea" are anagrams as they can be rearranged to form each other.
+Example 2:
+Input: strs = [""]
+Output: [[""]]
+Example 3:
+Input: strs = ["a"]
+Output: [["a"]]
+ 
+
