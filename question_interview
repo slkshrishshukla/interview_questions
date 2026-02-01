@@ -389,5 +389,43 @@ Output: [[""]]
 Example 3:
 Input: strs = ["a"]
 Output: [["a"]]
- 
+
+
+
+ Count of the Duplicate elements like AAabbCcd
+
+A= 2, a = 1, b= 2 and so on
+
+
+2) Create a Linked list with 5 nodes like 1,2,3,4,5
+
+3) create 2 separate linked list like 1,2,3,4,5 and 6,7 as another linked list but output should come like first linked list is 1,2,3,4,5 and second linked list as 6,7,3,4,5
+
+
+4) input: Ranbir123@ and output: Ranbir 
+
+5) Palindrome 
+
+6) Input: 3[a]2[bc]
+    Output: aaabcbc
+
+7) Input: 3[a2[c]]
+    Output: accaccacc
+
+8) Input: abcabcbb find the longest substring?
+    Output: abc
+
+9) find the first non repeating character in a string.
+
+10) find prime numbers between 1 to 100.
+
+11) find area of a triangle.
+
+12)find factorial of a number 
+
+13) lst= [1,2,3,4,5,[6,[7,8]]]
+      Output= [1,2,3,4,5,6,7,8]
+
+14) s = {"a": 1, "b": 2, "c": 3}
+      Output= abbccc-cccbba
 
