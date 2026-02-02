@@ -1,0 +1,9 @@
+words = ["apple", "banana", "apricot", "cherry", "avocado", "ant", "frog"]
+
+out = {}
+
+for word in words:
+    if word[0] in out:
+        out[word[0]] = []
+    out[word[0]].append(word) 
+print(out)
