@@ -7,3 +7,47 @@ for word in words:
         out[word[0]] = []
     out[word[0]].append(word) 
 print(out)
+
+def find_index(l,target):
+    num_index = {}
+    for i, num in enumerate(l):
+        data = target - num 
+        if data in num_index:
+            return num_index[data], i 
+        num_index[num] = i 
+    return []
+l= [2,9,11,15]
+target = 11 
+print(find_index(l,target))
+
+
+
+def decode_string(s: str) -> str:
+    stack = []
+    current_num = 0
+    current_string = ''
+
+    for char in s:
+        if char.isdigit():
+            current_num = current_num * 10 + int(char)
+        elif char == '[':
+            stack.append((current_string, current_num))
+            
+            current_string = ''
+            current_num = 0
+        elif char == ']':
+            
+            prev_string, num = stack.pop()
+           
+            current_string = prev_string + current_string * num
+        else:
+            # Append lowercase letters to the current string
+            current_string += char
+            
+    return current_string
+
+# Example usage
+input_str = "3[a2[c]]"
+output_str = decode_string(input_str)
+print(f"Input: {input_str}, Output: {output_str}") 
+# Output: Input: 3[a2[c]], Output: accaccacc
